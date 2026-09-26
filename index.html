@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JPB MATCH — Live Waitlist | War Chest</title>
+  <meta name="description" content="JPB MATCH kinship kit waitlist. Score against a sealed trustee-held reference. Not a medical device." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { ink: "#0B0B0C", gold: "#C4A574", bone: "#E8E0D4", line: "#2A2A2C" },
+          fontFamily: { serif: ["Georgia", "Times New Roman", "serif"] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-ink text-bone antialiased">
+  <header class="border-b border-line px-6 py-5 flex items-center justify-between sticky top-0 bg-ink/95 backdrop-blur z-10">
+    <div>
+      <p class="text-[10px] tracking-[0.35em] uppercase text-gold">War Chest · Family Office IP</p>
+      <h1 class="font-serif text-2xl mt-1">JPB MATCH</h1>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+      <p class="text-[10px] tracking-widest uppercase text-gold/80">Waitlist live</p>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-12 space-y-16">
+    <section class="grid md:grid-cols-2 gap-10 items-start">
+      <div>
+        <p class="text-gold text-xs tracking-[0.25em] uppercase mb-3">Now accepting invitations</p>
+        <h2 class="font-serif text-4xl leading-tight mb-6">A kinship score against a sealed JPB reference. Brand live. Lab not yet shipping.</h2>
+        <p class="text-bone/80 leading-relaxed mb-6">This page is the public front of JPB MATCH. Kits are not sold until a NATA lab, custody deed and trade marks are in place. Join the private list.</p>
+        <form id="wait" class="border border-gold/40 p-6 space-y-3" onsubmit="return join(event)">
+          <label class="text-xs tracking-widest uppercase text-gold" for="email">Email</label>
+          <input id="email" type="email" required placeholder="you@domain.com" class="w-full bg-transparent border border-line px-3 py-2 text-sm outline-none focus:border-gold" />
+          <button class="w-full bg-gold text-ink text-xs tracking-widest uppercase py-3 font-semibold">Request invitation</button>
+          <p id="msg" class="text-xs text-bone/50"></p>
+        </form>
+      </div>
+      <aside class="border border-line p-6 text-sm text-bone/70 space-y-3">
+        <p class="text-gold text-xs tracking-widest uppercase">Status</p>
+        <p>Site: live on GitHub Pages once enabled.</p>
+        <p>SKU-01 Home kit: design complete — not for sale.</p>
+        <p>SKU-02 Legal kit: solicitor-instructed only.</p>
+        <p>Not TGA registered. Not a medical device. Not court paternity unless SKU-02.</p>
+      </aside>
+    </section>
+
+    <section class="grid md:grid-cols-3 gap-6">
+      <article class="border border-line p-6"><p class="text-gold text-xs tracking-widest uppercase mb-2">Layer 1</p><h3 class="font-serif text-xl mb-2">Brand IP</h3><p class="text-sm text-bone/70">JPB MATCH, PALL LINE, MATCH INDEX, pack and report.</p></article>
+      <article class="border border-line p-6"><p class="text-gold text-xs tracking-widest uppercase mb-2">Layer 2</p><h3 class="font-serif text-xl mb-2">Protocol IP</h3><p class="text-sm text-bone/70">Collection SOP, score bands, report taxonomy. Weights stay secret.</p></article>
+      <article class="border border-line p-6"><p class="text-gold text-xs tracking-widest uppercase mb-2">Layer 3</p><h3 class="font-serif text-xl mb-2">Reference control</h3><p class="text-sm text-bone/70">Trustee holds the reference. You get a score. Never the raw file.</p></article>
+    </section>
+
+    <section>
+      <h2 class="font-serif text-3xl mb-6">Score bands</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead><tr class="text-left text-gold text-xs tracking-widest uppercase border-b border-line"><th class="py-3 pr-4">Band</th><th class="py-3 pr-4">Meaning</th><th class="py-3">Not a claim of</th></tr></thead>
+          <tbody class="text-bone/80">
+            <tr class="border-b border-line/60"><td class="py-3 pr-4">0.00–0.02</td><td class="pr-4">No meaningful match</td><td>Total exclusion</td></tr>
+            <tr class="border-b border-line/60"><td class="py-3 pr-4">0.03–0.08</td><td class="pr-4">Distant / noise</td><td>Cousin</td></tr>
+            <tr class="border-b border-line/60"><td class="py-3 pr-4">0.09–0.18</td><td class="pr-4">Possible extended kin</td><td>Legal kinship</td></tr>
+            <tr class="border-b border-line/60"><td class="py-3 pr-4">0.19–0.35</td><td class="pr-4">Close extended</td><td>Parentage</td></tr>
+            <tr><td class="py-3 pr-4">~0.50</td><td class="pr-4">First-degree pattern</td><td>Court paternity (use SKU-02)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="text-xs text-bone/40 pt-8 border-t border-line space-y-2">
+      <p>© J Bishop Enterprise Pty Ltd / War Chest. Concept and waitlist only. Not an offer of genetic testing. Not legal advice.</p>
+      <p>Repo: github.com/jbishopenterprise-prog/jpb-match</p>
+    </footer>
+  </main>
+  <script>
+    function join(e) {
+      e.preventDefault();
+      var email = document.getElementById('email').value.trim();
+      var list = JSON.parse(localStorage.getItem('jpb_wait') || '[]');
+      if (!list.includes(email)) list.push(email);
+      localStorage.setItem('jpb_wait', JSON.stringify(list));
+      document.getElementById('msg').textContent = 'Recorded on this device. Email counsel / trustee to be added to the official list.';
+      window.location.href = 'mailto:jbishopenterprise@gmail.com?subject=' + encodeURIComponent('JPB MATCH waitlist') + '&body=' + encodeURIComponent(email);
+      return false;
+    }
+  </script>
+</body>
+</html>
